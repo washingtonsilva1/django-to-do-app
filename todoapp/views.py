@@ -9,7 +9,7 @@ class HomeView(View):
         tasks = Task.objects.all()
         return render(
             self.request,
-            'todoapp/home.html',
+            'todoapp/view/home.html',
             {
                 'title': 'Home',
                 'tasks': tasks,
