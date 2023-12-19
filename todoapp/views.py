@@ -1,7 +1,17 @@
-from django.http import HttpResponse
+from .models import Task
+
+from django.shortcuts import render
 from django.views.generic import View
 
 
 class HomeView(View):
     def get(self, req, *args, **kwargs):
-        return HttpResponse('Hello, world!')
+        tasks = Task.objects.all()
+        return render(
+            self.request,
+            'todoapp/home.html',
+            {
+                'title': 'Home',
+                'tasks': tasks,
+            }
+        )
