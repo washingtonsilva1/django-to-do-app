@@ -1,4 +1,4 @@
-from todoapp.views import HomeView
+from todoapp.views import HomeTemplateView
 from django.test import TestCase
 from django.urls import resolve, reverse
 
@@ -6,7 +6,7 @@ from django.urls import resolve, reverse
 class HomeViewTest(TestCase):
     def test_home_view_is_using_correct_view_class(self):
         view = resolve(reverse('todoapp:home'))
-        self.assertIs(view.func.view_class, HomeView)
+        self.assertIs(view.func.view_class, HomeTemplateView)
 
     def test_home_view_is_rendering_correct_template(self):
         response = self.client.get(reverse('todoapp:home'))
