@@ -6,5 +6,5 @@ from django.urls import path
 app_name = 'todoapp'
 
 urlpatterns = [
-    path('', views.HomeView.as_view(), name='home')
+    path('', views.HomeTemplateView.as_view(), name='home'),
 ]

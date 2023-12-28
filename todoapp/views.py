@@ -1,17 +1,16 @@
 from .models import Task
 
-from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import TemplateView
 
 
-class HomeView(View):
-    def get(self, req, *args, **kwargs):
+class HomeTemplateView(TemplateView):
+    template_name = 'todoapp/view/home.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
         tasks = Task.objects.all()
-        return render(
-            self.request,
-            'todoapp/view/home.html',
-            {
-                'title': 'Home',
-                'tasks': tasks,
-            }
-        )
+        ctx.update({
+            'title': 'Home',
+            'tasks': tasks,
+        })
+        return ctx
