@@ -5,12 +5,17 @@
 <title>{% block title %}{% endblock title %} | ToDo - App</title>
 </head>
 <body>
-    <div id="header-menu">
-        {% include "global/partials/header.html" %}
-    </div>
     <div id="main-content-container">
+        <div id="header-menu">
+            {% include "global/partials/header.html" %}
+        </div>
+        <div id="sidebar">
+            {% include "global/partials/sidebar.html" %}
+        </div>
+        <div id="content">
         {% block content %}
         {% endblock content %}
+        </div>
     </div>
 </body>
 </html>
