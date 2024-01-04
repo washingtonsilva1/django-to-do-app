@@ -1,21 +1,27 @@
 {% extends "global/default.html" %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
-    <div class="main-content-header text-center">
-        <h1>Your Tasks</h1>
-    </div>
     <div class="main-content">
-        <div class="task-container-list">
-        {% for task in tasks %}
-            <div class="task-item-container {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
-                <div class="task-item-status {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}"></div>
-                <div class="task-item-name">{{task.name}}</div>
-            </div>
-        {% empty %}
-            <div class="d-block text-center">
+        <div class="table-task-container-list">
+            {% for task in tasks %}
+                <div class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
+                    <div class="task-item-status">
+                        {% if task.is_completed %}
+                            <i class="fa-solid fa-check"></i>
+                        {% else %}
+                            <i class="fa-solid fa-clock"></i>
+                        {% endif %}
+                    </div>
+                    <div class="task-item-container">
+                    <div class="task-item-name">{{task.name}}</div>
+                    <div class="task-item-desc">{{task.description}}</div>
+                    </div>
+                </div>
+            {% empty %}
+            <div class="table-task-row">
                 <h3>Looks like you don't have any task.</h3>
             </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}

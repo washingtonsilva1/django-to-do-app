@@ -1,17 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;700&display=swap');
 
 :root {
     --color-bg-light: #fefe;
+    --color-bar-dark: #212529;
     --color-dark: #2f2f2f;
+    --color-primary-dark: #3d4348;
     --color-hover-side-link: #ebdfdf;
-    --color-primary-red: #f57f7f;
     --color-dark-red: #af4646;
     --color-red: #da4d41;
     --color-primary-blue: #6d71d6;
     --color-primary-green: #62b668;
     --color-white: #fff;
-    --color-pending: #cbcdd1;
-    --color-border: #bdbdbd;
+    
+    --color-bg-success: #d1e7dd;
+    --color-bg-alert: #fff3cd;
+    --color-txt-success: #0a3622;
+    --color-txt-alert: #664d03;
+    --color-border-success: #a3cfbb;
+    --color-border-alert: #ffe69c;
+    
     --padding-sm: 5px;
     --padding-md: 15px;
     --padding-lg: 30px;
@@ -24,10 +31,9 @@
     text-decoration: none;
 }
 
-h1,
-h2,
-h3 {
-    color:var(--color-dark);
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
 body {
@@ -41,16 +47,22 @@ body {
 
 #header-menu {
     padding: var(--padding-md);
-    background-color: var(--color-red);
+    background-color: var(--color-bar-dark);
     grid-column: span 2;
 }
 
 #main-content-container {
     display: grid;
-    grid-template-columns: 240px auto;
+    grid-template-columns: 220px auto;
     grid-template-rows: 71px auto;
     width: 100%;
     height: 100vh;
+    transition: all .2s ease-out;
+}
+
+#main-content-container[sidebar-collapse="true"] {
+    grid-template-columns: 56px auto;
+    transition: all .2s ease-out;
 }
 
 .main-menu-container {
@@ -63,6 +75,42 @@ body {
     max-width: 450px;
 }
 
+.user-interaction {
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-lg);
+    align-items: center;
+}
+
+#toggle-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    width: 24px;
+    height: 19px;
+}
+
+.toggle-bar-icon {
+    fill: var(--color-white);
+    transition: all .2s ease-out;
+}
+
+#main-content-container[sidebar-collapse="false"] #toggle-bar > .toggle-bar-st {
+    transform: rotate(45deg) translate(6px, 6px);
+    transition: all .1s ease-out;
+}
+
+#main-content-container[sidebar-collapse="false"] #toggle-bar > .toggle-bar-nd {
+    display: none;
+    transition: all .2s linear;
+}
+
+#main-content-container[sidebar-collapse="false"] #toggle-bar > .toggle-bar-th {
+    transform: rotate(-45deg);
+    transition: all .2s ease-out;
+}
+
 .search-container {
     position: relative;
     width: 100%;
@@ -73,51 +121,33 @@ body {
     width: 100%;
     background: none;
     padding: calc(var(--padding-sm) + 2px) calc(var(--padding-sm) + 2px) calc(var(--padding-sm) + 2px) 35px;
-    border-radius: 15px;
-    border: 3px solid var(--color-primary-red);
+    border-radius: 10px;
+    border: 2px solid var(--color-white);
     outline: none;
     font-size: 18px;
     color: var(--color-white);
-    transition: all .2s ease-in;
-}
-
-.search-container-input:focus {
-    border-color: var(--color-white);
-    transition: all .2s ease-in;
 }
 
 .search-container-input::placeholder {
-    color: var(--color-primary-red);
+    color: var(--color-primary-dark);
     opacity: 1;
 }
 
 
 .search-container-icon {
-    color: var(--color-primary-red);
+    color: var(--color-white);
     position: absolute;
     font-size: 20px;
     left: 10px;
     top: 10px;
-    transition: all .2s ease-in;
-}
-
-.search-container-input:focus + .search-container-icon {
-    color: var(--color-white);
-    transition: all .2s ease-in;
 }
 
 .user-link-icon {
     font-size: 20px;
-    color: var(--color-primary-red);
-    border: 3px solid var(--color-primary-red);
+    color: var(--color-white);
+    border: 3px solid var(--color-white);
     border-radius: 50%;
     padding: 7px 10px;
-    transition: all .2s ease-in;
-}
-
-.user-link:hover .user-link-icon {
-    color: var(--color-white);
-    border-color: var(--color-white);
 }
 
 .main-content-header {
@@ -128,24 +158,51 @@ body {
     padding: var(--padding-lg) var(--padding-md) var(--padding-md) var(--padding-md);
 }
 
-.task-container-list {
+.table-task-container-list {
     display: grid;
     gap: var(--padding-md);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.table-task-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-sm);
+    align-items: center;
+    padding: var(--padding-md);
+}
+
+.table-task-container-list .table-task-row.task-completed {
+    background-color: var(--color-bg-success);
+    color: var(--color-txt-success);
+    border: 1px solid var(--color-border-success);
+    border-radius: 3px;
+}
+
+.table-task-container-list .table-task-row.task-pending {
+    background-color: var(--color-bg-alert);
+    color: var(--color-txt-alert);
+    border: 1px solid var(--color-border-alert);
+    border-radius: 3px;
 }
 
 .task-item-container {
-    display: flex;
-    align-items: center;
-    padding: var(--padding-md);
-    border-radius: 5px;
+    max-width: 60%;
 }
 
-.task-item-container.task-pending {
-    background-color: var(--color-pending);
-    border: 2px solid #8a8f93;
+.task-item-name,
+.task-item-desc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .task-item-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.task-item-desc {
     font-size: 20px;
 }
 
@@ -165,8 +222,9 @@ body {
 }
 
 #sidebar {
-    margin: var(--padding-md) 0;
-    border-right: 1px solid var(--color-border);
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: var(--color-bar-dark);
 }
 
 .main-sidebar-container {
@@ -176,18 +234,23 @@ body {
 }
 
 .main-sidebar-container a {
+    color: var(--color-white);
     position: relative;
     display: flex;
     padding-left: var(--padding-md);
     align-items: center;
-    gap: var(--padding-md);
+    gap: var(--padding-lg);
     height: 56px;
     transition: all .2s ease-in;
 }
 
+.sidebar-link {
+    font-weight: lighter;
+}
+
 .main-sidebar-container a:hover {
     padding-left: calc(var(--padding-md) + 10px);
-    background-color: var(--color-hover-side-link);
+    background-color: var(--color-primary-dark);
     transition: all .2s ease-in;
 }
 
