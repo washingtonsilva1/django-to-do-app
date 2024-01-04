@@ -52,11 +52,12 @@ body {
 }
 
 #main-content-container {
+    position: absolute;
     display: grid;
     grid-template-columns: 220px auto;
     grid-template-rows: 71px auto;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     transition: all .2s ease-out;
 }
 
@@ -161,10 +162,11 @@ body {
 .table-task-container-list {
     display: grid;
     gap: var(--padding-md);
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .table-task-row {
+    position: relative;
     display: flex;
     flex-direction: row;
     gap: var(--padding-sm);
@@ -190,6 +192,14 @@ body {
     max-width: 60%;
 }
 
+.task-item-status-txt {
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    right: 5px;
+    top: 5px;
+}
+
 .task-item-name,
 .task-item-desc {
     overflow: hidden;
@@ -206,17 +216,17 @@ body {
     font-size: 20px;
 }
 
-.task-item-status {
+.task-item-status-icon {
     margin-right: var(--padding-md);
 }
 
-.task-item-status.task-completed, .task-item-status.task-pending {
+.task-item-status-icon.task-completed, .task-item-status-icon.task-pending {
     width: 24px;
     height: 24px;
     border-radius: 50%;
 }
 
-.task-item-status.task-pending {
+.task-item-status-icon.task-pending {
     background-color: #a2aaaf;
     border: 2px solid #8a8f93;
 }

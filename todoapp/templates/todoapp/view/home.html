@@ -5,11 +5,18 @@
         <div class="table-task-container-list">
             {% for task in tasks %}
                 <div class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
-                    <div class="task-item-status">
+                    <div class="task-item-status-icon">
                         {% if task.is_completed %}
                             <i class="fa-solid fa-check"></i>
                         {% else %}
                             <i class="fa-solid fa-clock"></i>
+                        {% endif %}
+                    </div>
+                    <div class="task-item-status-txt">
+                        {% if task.is_completed %}
+                            <span>Done!</span>
+                        {% else %}
+                            <span>Pending...</span>
                         {% endif %}
                     </div>
                     <div class="task-item-container">
