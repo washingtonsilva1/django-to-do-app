@@ -2,7 +2,10 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
     <div class="main-content">
-        <div class="table-task-container-list">
+        <div class="content-container">
+            <h3>Your tasks</h3>
+        </div>
+        <div class="content-container table-task-container-list">
             {% for task in tasks %}
                 <div class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
                     <div class="task-item-status-icon">
@@ -25,7 +28,7 @@
                     </div>
                 </div>
             {% empty %}
-            <div class="table-task-row">
+            <div class="table-task-row container-info">
                 <h3>Looks like you don't have any task.</h3>
             </div>
             {% endfor %}
