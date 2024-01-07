@@ -1,4 +1,4 @@
-{% extends "global/default.html" %}
+{% extends "global/base_home.html" %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
     <div class="main-content">
@@ -7,7 +7,7 @@
         </div>
         <div class="content-container table-task-container-list">
             {% for task in tasks %}
-                <div class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
+                <a href="#" class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
                     <div class="task-item-status-icon">
                         {% if task.is_completed %}
                             <i class="fa-solid fa-check"></i>
@@ -26,7 +26,7 @@
                     <div class="task-item-name">{{task.name}}</div>
                     <div class="task-item-desc">{{task.description}}</div>
                     </div>
-                </div>
+                </a>
             {% empty %}
             <div class="table-task-row container-info">
                 <h3>Looks like you don't have any task.</h3>

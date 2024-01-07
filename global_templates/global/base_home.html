@@ -1,0 +1,18 @@
+{% extends "global/base.html" %}
+{% block base_title %}
+{% block title %}{% endblock title %}
+{% endblock base_title %}
+{% block base_content %}
+<div id="main-content-container" sidebar-collapse="true">
+    <div id="header-menu">
+        {% include "global/partials/header.html" %}
+    </div>
+    <div id="sidebar">
+        {% include "global/partials/sidebar.html" %}
+    </div>
+    <div id="content">
+    {% block content %}
+    {% endblock content %}
+    </div>
+</div>
+{% endblock base_content %}
