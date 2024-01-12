@@ -4,7 +4,7 @@ from .forms.login import LoginForm
 
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 
@@ -68,5 +68,19 @@ class LoginTemplateView(TemplateView):
         ctx.update({
             'title': 'Login',
             'form': form,
+        })
+        return ctx
+
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('todoapp:login')
+    model = Task
+    fields = ['name', 'description']
+    template_name = 'todoapp/view/task_create.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'title': 'Task Create'
         })
         return ctx
