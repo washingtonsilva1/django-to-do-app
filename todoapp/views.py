@@ -1,6 +1,6 @@
 import sweetify
 from .models import Task
-from .forms.login import LoginForm
+from .forms import LoginForm, TaskCreateForm
 
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -75,12 +75,22 @@ class LoginTemplateView(TemplateView):
 class TaskCreateView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('todoapp:login')
     model = Task
-    fields = ['name', 'description']
     template_name = 'todoapp/view/task_create.html'
+    form_class = TaskCreateForm
+    success_url = reverse_lazy('todoapp:home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        sweetify.toast(
+            self.request,
+            'Your task has been created successfully!',
+            icon='success'
+        )
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx.update({
-            'title': 'Task Create'
+            'title': 'Task Create',
         })
         return ctx

@@ -8,9 +8,14 @@
     --color-hover-side-link: #ebdfdf;
     --color-dark-red: #af4646;
     --color-red: #da4d41;
-    --color-primary-blue: #6d71d6;
+    --color-primary-blue: #0d6efd;
+    --color-primary-blue-border: #0d6efd;
     --color-primary-green: #62b668;
     --color-white: #fff;
+
+    --border-color: #dee2e6;
+    --border-focus-color: #86b7fe;
+    --color-focus: rgba(13, 110, 253, 0.25);
     
     --color-bg-success: #d1e7dd;
     --color-bg-alert: #fff3cd;
@@ -34,9 +39,8 @@
     text-decoration: none;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
+ul, ol {
+    list-style: none;
 }
 
 body {
@@ -271,11 +275,71 @@ body {
     transition: all .2s ease-in;
 }
 
+.errorlist {
+    color: var(--color-dark-red);
+}
+
+.form-field-control {
+    margin-bottom: var(--padding-md);
+}
+
+.form-field-control .field-label {
+    display: block;
+    font-weight: 800;
+    margin-bottom: var(--padding-sm);
+}
+
+.form-field-control input {
+    color: var(--color-primary-dark);
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    outline: none;
+    transition: all 0.2s linear;
+}
+
+.form-field-control input:focus,
+.form-field-control textarea:focus {
+    border-color: var(--border-focus-color);
+    box-shadow: 0 0 0 3px var(--color-focus);
+    transition: all 0.2s linear;
+}
+
+.form-field-control textarea {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    outline: none;
+    transition: all 0.2s linear;
+}
+
 
 /* Generic */
 
 .d-block {
     display: block;
+}
+
+.btn {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid var(--color-primary-blue-border);
+    transition: all .1s linear;
+}
+
+.btn-primary {
+    color: var(--color-white);
+    background-color: var(--color-primary-blue);
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    transition: all .1s linear;
 }
 
 .text-center {
