@@ -1,3 +1,3 @@
 [run]
 branch = True
-omit = venv/*,manage.py,**/*test*.py,utils/*
+omit = venv/*,manage.py,**/*test*.py,utils/utils.py
