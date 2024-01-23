@@ -6,6 +6,7 @@ from utils.pagination import custom_paginator
 from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.db.models import Q
 from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
@@ -17,7 +18,19 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        additional_query = self.request.GET.get('q', '')
         tasks = Task.objects.filter(user=self.request.user).order_by('-id')
+        if additional_query:
+            tasks = tasks.filter(
+                Q(
+                    Q(name__icontains=additional_query) |
+                    Q(description__icontains=additional_query)
+                )
+            )
+            ctx.update({
+                'additional_query': f'&q={additional_query}',
+                'search_term': additional_query
+            })
         paginator = custom_paginator(
             request=self.request,
             query_set=tasks,
