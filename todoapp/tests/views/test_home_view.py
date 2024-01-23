@@ -1,6 +1,7 @@
 from todoapp.views import HomeTemplateView
 from utils.utils import TaskMixin
 
+from unittest.mock import patch
 from django.test import TestCase
 from django.urls import resolve, reverse
 
@@ -36,7 +37,7 @@ class HomeViewTest(TestCase, TaskMixin):
 
     def test_home_view_display_default_text_if_does_not_have_any_task(self):
         response = self.client.get(reverse('todoapp:home'))
-        text_needed = 'Looks like you don\'t have any task'
+        text_needed = 'No tasks were found'
         content = response.content.decode('utf-8')
         self.assertIn(text_needed, content)
 
@@ -70,3 +71,30 @@ class HomeViewTest(TestCase, TaskMixin):
         response = self.client.get(reverse('todoapp:home'))
         content = response.content.decode('utf-8')
         self.assertIn('task-completed', content)
+
+    @patch('django.conf.settings.OBJECTS_PER_PAGE', new=15)
+    def test_home_view_tasks_are_displayed_according_to_settings_config(self):
+        tasks = self.create_task_sample(n=20, user=self.user)
+        response = self.client.get(reverse('todoapp:home'))
+        self.assertEqual(
+            tasks[:15],
+            response.context['page'].object_list
+        )
+        second_page = list(
+            response.context['page'].paginator.get_page(2).object_list
+        )
+        self.assertEqual(tasks[15:], second_page)
+
+    def test_home_view_searching_for_a_task_by_name_or_description(self):
+        search_term = 'That is waht i am looking for'
+
+        task = self.create_task(name=search_term, user=self.user)
+        self.create_task_sample(user=self.user)
+        response = self.client.get(
+            reverse('todoapp:home'),
+            data={
+                'q': search_term
+            }
+        )
+        self.assertIn(task, response.context['page'].object_list)
+        self.assertEqual(1, len(response.context['page'].object_list))

@@ -1,3 +1,6 @@
+import string
+from random import SystemRandom
+
 from django.contrib.auth.models import User
 from todoapp.models import Task
 
@@ -22,3 +25,21 @@ class TaskMixin:
             is_completed=is_completed,
             user=user
         )
+
+    def create_task_sample(self, n=5, user=None):
+        if user is None:
+            user = self.create_user()
+        tasks = []
+        for i in range(1, n+1):
+            tasks.append(self.create_task(
+                name=f'Task #{i}',
+                desc=f'{generate_random_string(10)}',
+                user=user
+            ))
+        tasks.reverse()
+        return tasks
+
+
+def generate_random_string(n=5):
+    p = string.ascii_letters + string.digits
+    return ''.join(SystemRandom().choices(p, k=n))
