@@ -1,7 +1,9 @@
 import sweetify
 from .models import Task
 from .forms import LoginForm, TaskCreateForm
+from utils.pagination import custom_paginator
 
+from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
@@ -15,10 +17,17 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        tasks = Task.objects.filter(user=self.request.user)
+        tasks = Task.objects.filter(user=self.request.user).order_by('-id')
+        paginator = custom_paginator(
+            request=self.request,
+            query_set=tasks,
+            objects_per_page=settings.OBJECTS_PER_PAGE,
+            pages_to_display=settings.PAGES_TO_DISPLAY,
+        )
         ctx.update({
             'title': 'Home',
-            'tasks': tasks,
+            'page_range': paginator['page_range'],
+            'page': paginator['page'],
         })
         return ctx
 

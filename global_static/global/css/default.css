@@ -315,6 +315,22 @@ body {
     transition: all 0.2s linear;
 }
 
+#pagination-container {
+    display: flex;
+    gap: var(--padding-md);
+    justify-content: center;
+}
+
+.pagination-item {
+    padding: 5px 10px;
+    color: var(--color-white);
+    background-color: var(--color-dark);
+    border-radius: 3px;
+}
+
+.pagination-item-active {
+    background-color: var(--color-primary-dark);
+}
 
 /* Generic */
 
@@ -344,14 +360,6 @@ body {
 
 .text-center {
     text-align: center;
-}
-
-.icon-blue {
-    color: var(--color-primary-blue);
-}
-
-.icon-green {
-    color: var(--color-primary-green);
 }
 
 @media (max-width: 768px) {

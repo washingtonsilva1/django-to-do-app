@@ -6,7 +6,7 @@
             <h3>Your tasks</h3>
         </div>
         <div class="content-container table-task-container-list">
-            {% for task in tasks %}
+            {% for task in page %}
                 <a href="#" class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
                     <div class="task-item-status-icon">
                         {% if task.is_completed %}
