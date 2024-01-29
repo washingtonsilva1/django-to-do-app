@@ -306,7 +306,8 @@ body {
     margin-bottom: var(--padding-sm);
 }
 
-.form-field-control input {
+.form-field-control input,
+.form-field-control select {
     color: var(--color-primary-dark);
     font-size: 16px;
     padding: 10px;
@@ -314,10 +315,12 @@ body {
     border: 1px solid var(--border-color);
     outline: none;
     transition: all 0.2s linear;
+    margin-bottom: var(--padding-sm);
 }
 
 .form-field-control input:focus,
-.form-field-control textarea:focus {
+.form-field-control textarea:focus,
+.form-field-control select:focus {
     border-color: var(--border-focus-color);
     box-shadow: 0 0 0 3px var(--color-focus);
     transition: all 0.2s linear;
@@ -347,6 +350,20 @@ body {
 
 .pagination-item-active {
     background-color: var(--color-primary-dark);
+}
+
+.task-form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.task-form-container form input,
+.task-form-container form textarea {
+    width: 100%;
+}
+
+.task-form-container form {
+    width: 50%;
 }
 
 /* Generic */
@@ -412,5 +429,9 @@ body {
 
     #content {
         grid-column: span 2;
+    }
+
+    .task-form-container form {
+        width: 80%;
     }
 }

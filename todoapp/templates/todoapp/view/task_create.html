@@ -6,11 +6,13 @@
             <h3>Create your task</h3>
         </div>
         <div class="content-container">
-            <form action="{% url "todoapp:task_create" %}" method='POST'>
-                {% csrf_token %}
-                {% include "todoapp/partials/form.html" %}
-                <input class="btn btn-primary" type="submit" value="Create">
-            </form>
+            <div class="task-form-container">
+                <form action="{% url "todoapp:task_create" %}" method='POST'>
+                    {% csrf_token %}
+                    {% include "todoapp/partials/form.html" %}
+                    <button class="btn btn-primary">Create</button>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}
