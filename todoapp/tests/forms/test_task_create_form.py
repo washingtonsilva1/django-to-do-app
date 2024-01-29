@@ -29,7 +29,7 @@ class TaskCreateFormTest(TestCase, TaskMixin):
             response.context['form'].errors['name']
         )
 
-    def test_task_create_form_name_field_can_not_have_less_than_eight_characters(self):
+    def test_task_create_form_name_field_must_have_at_least_eight_characters(self):
         self.form_data['name'] = 'A'*7
         response = self.client.post(
             reverse('todoapp:task_create'),
@@ -37,20 +37,8 @@ class TaskCreateFormTest(TestCase, TaskMixin):
             follow=True
         )
         self.assertIn(
-            'Your task name must have eight characters or more.',
+            'Your task name must have at least 8 characters.',
             response.context['form'].errors['name']
-        )
-
-    def test_task_create_form_description_field_can_not_be_equal_to_task_name(self):
-        self.form_data['description'] = self.form_data['name']
-        response = self.client.post(
-            reverse('todoapp:task_create'),
-            data=self.form_data,
-            follow=True
-        )
-        self.assertIn(
-            'Your description can not be equal to your task name.',
-            response.context['form'].errors['description']
         )
 
     def test_task_create_form_name_field_must_have_at_most_eighty_characters(self):
@@ -75,6 +63,18 @@ class TaskCreateFormTest(TestCase, TaskMixin):
         self.assertIn(
             'Your description must have at most 150 characters.',
             response.context['form'].errors['description']
+        )
+
+    def test_task_create_form_name_field_can_not_be_equal_to_an_existing_task_name(self):
+        task = self.create_task(name='Yet, another task')
+        self.form_data['name'] = task.name
+        response = self.client.post(
+            reverse('todoapp:task_create'),
+            data=self.form_data
+        )
+        self.assertIn(
+            'A task with this name already exists.',
+            response.context['form'].errors['name']
         )
 
     def test_task_create_form_creates_a_task_successfully(self):

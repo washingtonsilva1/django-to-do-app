@@ -23,7 +23,7 @@ class TaskCreateViewTest(TestCase, TaskMixin):
         self.assertTemplateUsed(response, 'todoapp/view/task_create.html')
 
     def test_task_create_view_title_is_displaying_correctly(self):
-        title_needed = 'Task Create | ToDo - App'
+        title_needed = 'Create Task | ToDo - App'
 
         response = self.client.get(reverse('todoapp:task_create'))
         content = response.content.decode('utf-8')
