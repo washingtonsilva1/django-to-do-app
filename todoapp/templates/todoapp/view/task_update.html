@@ -1,0 +1,18 @@
+{% extends "global/base_home.html" %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+    <div class="main-content">
+        <div class="content-container">
+            <h3>Update Task - {{task.name}}</h3>
+        </div>
+        <div class="content-container">
+            <div class="task-form-container">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% include "todoapp/partials/form.html" %}
+                    <button class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,13 +1,15 @@
+from typing import Any
+from django.http import HttpRequest, HttpResponse
 import sweetify
 from .models import Task
-from .forms import LoginForm, TaskCreateForm
+from .forms import LoginForm, TaskCreateForm, TaskUpdateForm
 from utils.pagination import custom_paginator
 
 from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.db.models import Q
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 
@@ -113,6 +115,37 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx.update({
-            'title': 'Task Create',
+            'title': 'Create Task',
         })
         return ctx
+
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('todoapp:login')
+    success_url = reverse_lazy('todoapp:home')
+    model = Task
+    form_class = TaskUpdateForm
+    template_name = 'todoapp/view/task_update.html'
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'title': 'Update Task',
+        })
+        return ctx
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(user=self.request.user)
+        return qs
+
+    def form_valid(self, form):
+        sweetify.toast(
+            self.request,
+            'Your task has been updated successfully!',
+            icon='success'
+        )
+        return super().form_valid(form)
