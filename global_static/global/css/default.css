@@ -10,7 +10,9 @@
     --color-dark-red: #af4646;
     --color-red: #da4d41;
     --color-primary-blue: #0d6efd;
+    --color-primary-red: #dc3545;
     --color-primary-blue-border: #0d6efd;
+    --color-primary-red-border: #dc3545;
     --color-primary-green: #62b668;
     --color-white: #fff;
 
@@ -354,7 +356,10 @@ body {
 
 .task-form-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: var(--padding-md);
 }
 
 .task-form-container form input,
@@ -378,18 +383,33 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
     outline: none;
-    border: 1px solid var(--color-primary-blue-border);
+    border: 1px solid black;
+    transition: all .1s linear;
+}
+
+.btn:hover {
     transition: all .1s linear;
 }
 
 .btn-primary {
     color: var(--color-white);
+    border-color: var(--color-primary-blue-border);
     background-color: var(--color-primary-blue);
 }
 
 .btn-primary:hover {
     background-color: #0b5ed7;
-    transition: all .1s linear;
+}
+
+.btn-red {
+    color: var(--color-white);
+    border-color: var(--color-primary-red-border);
+    background-color: var(--color-primary-red);
+}
+
+.btn-red:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
 }
 
 .text-center {

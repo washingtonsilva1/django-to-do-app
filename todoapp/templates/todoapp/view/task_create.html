@@ -10,7 +10,7 @@
                 <form action="{% url "todoapp:task_create" %}" method='POST'>
                     {% csrf_token %}
                     {% include "todoapp/partials/form.html" %}
-                    <button class="btn btn-primary">Create</button>
+                    <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create</button>
                 </form>
             </div>
         </div>

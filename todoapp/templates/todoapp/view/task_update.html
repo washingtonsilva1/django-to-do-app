@@ -10,9 +10,31 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     {% include "todoapp/partials/form.html" %}
-                    <button class="btn btn-primary">Update</button>
+                    <button class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                </form>
+                <form id="form-delete-task" action="{% url "todoapp:task_delete" %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{task.id}}">
+                    <button class="btn btn-red"><i class="btn-icon fa-solid fa-trash"></i> Delete</button>
                 </form>
             </div>
         </div>
     </div>
 {% endblock content %}
+{% block script %}
+    form = document.getElementById('form-delete-task');
+    form.addEventListener('submit', function(ev) {
+        ev.preventDefault();
+        Swal.fire({
+            icon: "question",
+            title: "Do you really want to delete this task?",
+            showDenyButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: "No"
+        }).then(function(choice) {
+            if (choice.isConfirmed) {
+                form.submit()
+            }
+        })
+    })
+{% endblock script %}

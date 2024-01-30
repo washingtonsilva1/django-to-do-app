@@ -8,9 +8,12 @@
     {% block base_content %}
     {% endblock base_content %}
     {% load static %}
-    <script src="{% static "global/js/default.js" %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% load sweetify %}
     {% sweetify %}
+    <script type="text/javascript">
+    {% block base_script %}
+    {% endblock base_script %}
+    </script>
 </body>
 </html>

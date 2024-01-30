@@ -1,15 +1,14 @@
-from typing import Any
-from django.http import HttpRequest, HttpResponse
 import sweetify
 from .models import Task
 from .forms import LoginForm, TaskCreateForm, TaskUpdateForm
 from utils.pagination import custom_paginator
 
 from django.conf import settings
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.http import Http404
 from django.db.models import Q
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 
@@ -149,3 +148,23 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
             icon='success'
         )
         return super().form_valid(form)
+
+
+class TaskDeleteView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('todoapp:login')
+
+    def get_task(self, task_id: str):
+        if not task_id.isdigit():
+            raise Http404()
+        return get_object_or_404(Task, id=task_id, user=self.request.user)
+
+    def post(self, req, *args, **kwargs):
+        task_id = self.request.POST.get('id', '')
+        task = self.get_task(task_id)
+        task.delete()
+        sweetify.toast(
+            self.request,
+            'Your task has been deleted successfully!',
+            icon='success'
+        )
+        return redirect('todoapp:home')
