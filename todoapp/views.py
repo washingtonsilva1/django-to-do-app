@@ -1,6 +1,6 @@
 import sweetify
 from .models import Task
-from .forms import LoginForm, TaskCreateForm, TaskUpdateForm
+from .forms import LoginForm, TaskCreateForm, TaskUpdateForm, RegisterForm
 from utils.pagination import custom_paginator
 
 from django.conf import settings
@@ -55,9 +55,7 @@ class LoginTemplateView(TemplateView):
         return super().get(req, *args, **kwargs)
 
     def post(self, req, *args, **kwargs):
-        POST = self.request.POST
-        self.request.session['form_post_data'] = POST
-        form = LoginForm(POST)
+        form = LoginForm(self.request.POST or None)
         if form.is_valid():
             user_auth = authenticate(
                 self.request,
@@ -71,7 +69,6 @@ class LoginTemplateView(TemplateView):
                     icon='success'
                 )
                 login(self.request, user_auth)
-                del (self.request.session['form_post_data'])
                 return redirect('todoapp:home')
             else:
                 sweetify.error(
@@ -82,15 +79,46 @@ class LoginTemplateView(TemplateView):
                 )
                 return redirect('todoapp:login')
         else:
-            return redirect('todoapp:login')
+            return self.get(req, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        form_post_data = self.request.session.get('form_post_data', None)
-        form = LoginForm(form_post_data)
+        form = LoginForm(self.request.POST or None)
         ctx.update({
             'title': 'Login',
             'form': form,
+        })
+        return ctx
+
+
+class RegisterTemplateView(TemplateView):
+    template_name = 'todoapp/view/register.html'
+
+    def get(self, req, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('todoapp:home')
+        return super().get(req, *args, **kwargs)
+
+    def post(self, req, *args, **kwargs):
+        form = RegisterForm(self.request.POST or None)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            sweetify.toast(
+                self.request,
+                'You have been created your user successfully!',
+                icon='success',
+            )
+            return redirect('todoapp:login')
+        return self.get(req, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        form = RegisterForm(self.request.POST or None)
+        ctx.update({
+            'form': form,
+            'title': 'Register',
         })
         return ctx
 
@@ -101,6 +129,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     template_name = 'todoapp/view/task_create.html'
     form_class = TaskCreateForm
     success_url = reverse_lazy('todoapp:home')
+
+    def post(self, req, *args, **kwargs):
+        return super().post(req, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
