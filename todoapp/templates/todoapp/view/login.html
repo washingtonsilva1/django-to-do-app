@@ -1,20 +1,18 @@
-{% extends "global/base.html" %}
+{% extends "global/base_home.html" %}
 {% block title %}{{title}}{% endblock title %}
-{% block base_content %}
-<form action="{% url "todoapp:login" %}" method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="form-field-control">
-            <label for="{{field.id_for_label}}">{{field.label}}</label>
-            {{field}}
-            {% if field.help_text %}
-            <div class="field-help-text">
-                <p>{{field.help_text}}</p>
-            </div>
-            {% endif %}
-            {{field.errors}}
+{% block content %}
+    <div class="main-content">
+        <div class="content-container text-center">
+            <h2>Login</h2>
         </div>
-    {% endfor %}
-    <button type="submit">Login</button>
-</form>
-{% endblock base_content %}
+        <div class="content-container">
+            <div class="form-container">
+                <form action="{% url "todoapp:login" %}" method="POST">
+                    {% csrf_token %}
+                    {% include "todoapp/partials/form.html" %}
+                    <button class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

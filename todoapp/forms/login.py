@@ -6,7 +6,8 @@ class LoginForm(forms.Form):
         label='Username',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Type your username'
+                'placeholder': 'Type your username',
+                'class': 'span-2',
             }
         ),
         error_messages={
@@ -17,7 +18,8 @@ class LoginForm(forms.Form):
         label='Password',
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Type your password'
+                'placeholder': 'Type your password',
+                'class': 'span-2',
             }
         ),
         error_messages={
