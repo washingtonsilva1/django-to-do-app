@@ -2,11 +2,11 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
     <div class='main-content'>
-        <div class="content-container">
-            <h3>Create your task</h3>
+        <div class="content-container text-center">
+            <h2>Create your task</h2>
         </div>
         <div class="content-container">
-            <div class="task-form-container">
+            <div class="form-container">
                 <form action="{% url "todoapp:task_create" %}" method='POST'>
                     {% csrf_token %}
                     {% include "todoapp/partials/form.html" %}

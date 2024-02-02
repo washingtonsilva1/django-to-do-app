@@ -10,6 +10,7 @@ class TaskBaseForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Ex.: Do the laundry',
+                'class': 'span-2',
             }
         ),
         min_length=8,
@@ -23,7 +24,11 @@ class TaskBaseForm(forms.ModelForm):
 
     description = forms.CharField(
         label='Description',
-        widget=forms.Textarea(),
+        widget=forms.Textarea(
+            attrs={
+                'class': 'span-2',
+            }
+        ),
         max_length=150,
         required=False,
         error_messages={
