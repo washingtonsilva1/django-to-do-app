@@ -29,7 +29,8 @@ class RegisterForm(forms.ModelForm):
             }
         ),
         error_messages={
-            'required': 'This field can not be empty.'
+            'required': 'This field can not be empty.',
+            'invalid': 'Your email address must be valid.',
         }
     )
     password = forms.CharField(
