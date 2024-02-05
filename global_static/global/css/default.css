@@ -274,7 +274,8 @@ body {
     border-radius: 3px;
 }
 
-.main-sidebar-container a {
+.main-sidebar-container a,
+.main-sidebar-container .btn-link {
     color: var(--color-white);
     position: relative;
     display: flex;
@@ -289,7 +290,8 @@ body {
     font-weight: lighter;
 }
 
-.main-sidebar-container a:hover {
+.main-sidebar-container a:hover,
+.main-sidebar-container .btn-link:hover {
     padding-left: calc(var(--padding-md) + 10px);
     background-color: var(--color-primary-dark);
     transition: all .2s ease-in;
@@ -425,6 +427,16 @@ body {
 
 .span-2 {
     grid-column: span 2;
+}
+
+.btn-link {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 @media (max-width: 768px) {

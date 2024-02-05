@@ -8,10 +8,14 @@
         <i class="fa-solid fa-plus"></i>
         <h3 class="sidebar-link">New task</h3>
     </a>
-    <a href="#">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <h3 class="sidebar-link">Logout</h3>
-    </a>
+    <form action="{% url "todoapp:logout" %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="user" value="{{user}}">
+        <button class="btn-link">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <h3 class="sidebar-link">Logout</h3>
+        </button>
+    </form>
     {% else %}
     <a href="{% url "todoapp:login" %}">
         <i class="fa-solid fa-list-ol"></i>

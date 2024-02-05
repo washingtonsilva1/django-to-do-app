@@ -10,7 +10,7 @@ from django.http import Http404
 from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 class HomeTemplateView(LoginRequiredMixin, TemplateView):
@@ -107,7 +107,7 @@ class RegisterTemplateView(TemplateView):
             user.save()
             sweetify.toast(
                 self.request,
-                'You have been created your user successfully!',
+                'Your user has been created successfully!',
                 icon='success',
             )
             return redirect('todoapp:login')
@@ -121,6 +121,23 @@ class RegisterTemplateView(TemplateView):
             'title': 'Register',
         })
         return ctx
+
+
+class LogoutView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('todoapp:login')
+
+    def post(self, req, *args, **kwargs):
+        u = self.request.POST.get('user', None)
+        if u is None or u is not None and \
+                not u == self.request.user.get_username():
+            return redirect('todoapp:home')
+        logout(self.request)
+        sweetify.toast(
+            self.request,
+            'You have been logged out successfully!',
+            icon='success'
+        )
+        return redirect('todoapp:login')
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
