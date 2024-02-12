@@ -14,14 +14,12 @@ class TaskMixin:
 
     def create_task(self,
                     name='Task Example',
-                    desc='Task Description',
                     is_completed=False,
                     user=None):
         if user is None:
             user = self.create_user()
         return Task.objects.create(
             name=name,
-            description=desc,
             is_completed=is_completed,
             user=user
         )
@@ -33,7 +31,6 @@ class TaskMixin:
         for i in range(1, n+1):
             tasks.append(self.create_task(
                 name=f'Task #{i}',
-                desc=f'{generate_random_string(10)}',
                 user=user
             ))
         tasks.reverse()

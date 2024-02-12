@@ -43,7 +43,7 @@ class TaskDeleteViewTest(TestCase, TaskMixin):
         task = self.create_task(user=self.user)
         response = self.client.post(
             reverse('todoapp:task_delete'),
-            data={'id': task.id},
+            data={'task_id': task.id},
             follow=True
         )
         content = response.content.decode()

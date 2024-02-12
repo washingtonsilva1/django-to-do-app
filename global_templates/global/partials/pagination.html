@@ -1,27 +1,19 @@
 {% if page.has_other_pages %}
-    <div class="content-container">
-        <div id="pagination-container">
-            {% if page.has_previous %}
-                <a href="?page={{page.previous_page_number}}{{additional_query}}" class="pagination-item">Previous</a>
+<div id="pagination">
+    <div class="pagination-container">
+        {% if page.has_previous %}
+        <a href="?page={{page.previous_page_number}}{{additional_query}}" class="pagination-item"><i class="fa-solid fa-chevron-left"></i></a>
+        {% endif %}
+        {% for page in page_range.pagination %}
+            {% if page == page_range.current_page %}
+                <div class="pagination-item item-active">{{page}}</div>
+            {% else %}
+                <a href="?page={{page}}{{additional_query}}" class="pagination-item">{{page}}</a>
             {% endif %}
-            {% if page_range.first_page_out_of_range %}
-                <a href="?page=1{{additional_query}}" class="pagination-item">1</a>
-                <div class="pagination-item">...</div>
-            {% endif %}
-            {% for page in page_range.pagination %}
-                {% if page == page_range.current_page %}
-                    <div class="pagination-item pagination-item-active">{{page}}</div>
-                {% else %}
-                    <a href="?page={{page}}{{additional_query}}" class="pagination-item">{{page}}</a>
-                {% endif %}
-            {% endfor %}
-            {% if page_range.last_page_out_of_range %}
-                <div class="pagination-item">...</div>
-                <a href="?page={{page_range.total_pages}}{{additional_query}}" class="pagination-item">{{page_range.total_pages}}</a>
-            {% endif %}
-            {% if page.has_next %}
-                <a href="?page={{page.next_page_number}}{{additional_query}}" class="pagination-item">Next</a>
-            {% endif %}
-        </div>
+        {% endfor %}
+        {% if page.has_next %}
+            <a href="?page={{page.next_page_number}}{{additional_query}}" class="pagination-item"><i class="fa-solid fa-chevron-right"></i></a>
+        {% endif %}
     </div>
+</div>
 {% endif %}

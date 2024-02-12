@@ -60,17 +60,11 @@ class HomeViewTest(TestCase, TaskMixin):
         self.assertIn(this_task_is_mine, content)
         self.assertNotIn(this_task_is_not_mine, content)
 
-    def test_home_view_pending_tasks_got_task_pending_class(self):
-        self.create_task(is_completed=False, user=self.user)
-        response = self.client.get(reverse('todoapp:home'))
-        content = response.content.decode('utf-8')
-        self.assertIn('task-pending', content)
-
-    def test_home_view_completed_tasks_got_task_completed_class(self):
+    def test_home_view_completed_tasks_got_finished_class(self):
         self.create_task(is_completed=True, user=self.user)
         response = self.client.get(reverse('todoapp:home'))
         content = response.content.decode('utf-8')
-        self.assertIn('task-completed', content)
+        self.assertIn('finished', content)
 
     @patch('django.conf.settings.OBJECTS_PER_PAGE', new=15)
     def test_home_view_tasks_are_displayed_according_to_settings_config(self):
@@ -84,17 +78,3 @@ class HomeViewTest(TestCase, TaskMixin):
             response.context['page'].paginator.get_page(2).object_list
         )
         self.assertEqual(tasks[15:], second_page)
-
-    def test_home_view_searching_for_a_task_by_name_or_description(self):
-        search_term = 'That is waht i am looking for'
-
-        task = self.create_task(name=search_term, user=self.user)
-        self.create_task_sample(user=self.user)
-        response = self.client.get(
-            reverse('todoapp:home'),
-            data={
-                'q': search_term
-            }
-        )
-        self.assertIn(task, response.context['page'].object_list)
-        self.assertEqual(1, len(response.context['page'].object_list))

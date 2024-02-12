@@ -10,8 +10,7 @@ class RegisterForm(forms.ModelForm):
         min_length=4,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Type your username',
-                'class': 'span-2',
+                'class': 'form-input-control'
             }
         ),
         error_messages={
@@ -24,8 +23,7 @@ class RegisterForm(forms.ModelForm):
         label='Email',
         widget=forms.EmailInput(
             attrs={
-                'placeholder': 'Type your email',
-                'class': 'span-2',
+                'class': 'form-input-control',
             }
         ),
         error_messages={
@@ -37,7 +35,7 @@ class RegisterForm(forms.ModelForm):
         label='Password',
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Type your password',
+                'class': 'form-input-control'
             }
         ),
         error_messages={
@@ -51,7 +49,7 @@ class RegisterForm(forms.ModelForm):
         label='Confirm your password',
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Type your password again',
+                'class': 'form-input-control'
             }
         ),
         error_messages={

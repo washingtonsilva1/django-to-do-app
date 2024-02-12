@@ -1,37 +1,46 @@
-{% extends "global/base_home.html" %}
+{% extends "global/global.html" %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
-    <div class="main-content">
-        <div class="content-container">
-            <h3>Your tasks</h3>
-        </div>
-        <div class="content-container table-task-container-list">
+<div id="main-container">
+    <div id="task-add-container">
+        <form action="{% url "todoapp:task_create" %}" method="POST">
+            {% csrf_token %}
+            <input class="task-add-input" type="text" placeholder="What do you need to do?" name="name" required>
+            <button class="task-add-button">ADD</button>
+        </form>
+    </div>
+    <div id="task-list-container">
+        <div class="task-list-display">
             {% for task in page %}
-                <a href="{% url "todoapp:task_update" task.id %}" class="table-task-row {% if task.is_completed %}task-completed{% else %}task-pending{% endif %}">
-                    <div class="task-item-status-icon">
-                        {% if task.is_completed %}
-                            <i class="fa-solid fa-check"></i>
-                        {% else %}
-                            <i class="fa-solid fa-clock"></i>
-                        {% endif %}
-                    </div>
-                    <div class="task-item-status-txt">
-                        {% if task.is_completed %}
-                            <span>Done!</span>
-                        {% else %}
-                            <span>Pending...</span>
-                        {% endif %}
-                    </div>
-                    <div class="task-item-container">
-                    <div class="task-item-name">{{task}}</div>
-                    <div class="task-item-desc">{{task.description}}</div>
-                    </div>
-                </a>
+                <div class="task-list-item-container {% if task.is_completed %}finished{% endif %}">
+                    <form class="task-toggler-form" action="{% url "todoapp:task_update" %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{task.id}}">
+                        <button class="task-toggler">
+                            {% if task.is_completed %}
+                                <i class="fa-solid fa-check"></i>
+                            {% endif %}
+                        </button>
+                    </form>
+                    <div class="task-name">{{task}}</div>
+                    <form action="{% url "todoapp:task_delete" %}" class="task-delete-form" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{task.id}}">
+                        <button class="task-delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
             {% empty %}
-            <div class="table-task-row container-info">
-                <h3>No tasks were found.</h3>
+            <div class="task-empty-container">
+                <span>No tasks were found.</span>
             </div>
             {% endfor %}
         </div>
+        <div class="task-actions">
+            <button class="btn btn-primary">Clear tasks</button>
+        </div>
     </div>
+    {% include "global/partials/pagination.html" %}
+</div>
 {% endblock content %}

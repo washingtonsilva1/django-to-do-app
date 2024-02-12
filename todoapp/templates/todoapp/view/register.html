@@ -1,17 +1,24 @@
-{% extends "global/base_home.html" %}
+{% extends "global/global.html" %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
-<div class="main-content">
-    <div class="content-container text-center">
-        <h2>Register</h2>
-    </div>
-    <div class="content-container">
-        <div class="form-container">
-            <form action="" method="POST">
-                {% csrf_token %}
-                {% include "todoapp/partials/form.html" %}
-                <button class="btn btn-primary">Register</button>
-            </form>
+<div id="front-container">
+    <div class="box-container">
+        <div class="box">
+            <a class="link-return" href="{% url "todoapp:login" %}">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <div class="box-header">
+                <h1>Register</h1>
+            </div>
+            <div class="box-body">
+                <form class="form-control" action="{% url "todoapp:register" %}" method="POST">
+                    {% csrf_token %}
+                    {% include "todoapp/partials/form.html" %}
+                    <div class="form-block">
+                        <button class="btn-block btn-success">Register</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
