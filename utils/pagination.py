@@ -9,6 +9,8 @@ def custom_pagination_range(page_range, current_page, pages_to_display):
     total_pages = len(page_range)
     if current_page >= total_pages - middle_page:
         first_page = total_pages - pages_to_display
+        if first_page < 0:
+            first_page = 0
         last_page = total_pages
     if current_page < middle_page:
         first_page = 0
