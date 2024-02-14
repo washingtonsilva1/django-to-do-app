@@ -41,3 +41,10 @@ class TaskUpdateViewTest(TestCase, TaskMixin):
             'Your task status has been updated successfully!',
             content,
         )
+
+    def test_task_update_view_not_found_if_task_id_is_not_a_number(self):
+        response = self.client.post(
+            reverse('todoapp:task_update'),
+            data={'task_id': 'asd'}
+        )
+        self.assertEqual(404, response.status_code)
