@@ -7,7 +7,6 @@ from django.conf import settings
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.http import Http404
-from django.db.models import Q
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
@@ -185,4 +184,26 @@ class TaskDeleteView(View):
             'Your task has been deleted successfully!',
             icon='success'
         )
+        return redirect('todoapp:home')
+
+
+class TasksClearView(View):
+    def post(self, req, *args, **kwargs):
+        tasks = Task.objects.filter(
+            is_completed=True,
+            user=self.request.user
+        )
+        if len(tasks) > 0:
+            tasks.delete()
+            sweetify.toast(
+                self.request,
+                'Your completed tasks have been deleted successfully!',
+                icon='success'
+            )
+        else:
+            sweetify.toast(
+                self.request,
+                'You do not have any completed tasks!',
+                icon='error'
+            )
         return redirect('todoapp:home')

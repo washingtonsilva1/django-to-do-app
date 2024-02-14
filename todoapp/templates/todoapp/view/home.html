@@ -38,9 +38,17 @@
             {% endfor %}
         </div>
         <div class="task-actions">
-            <button class="btn btn-primary">Clear tasks</button>
+            <form id="task-clear-form" action="{% url "todoapp:tasks_clear" %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary">Clear tasks</button>
+            </form>
         </div>
     </div>
     {% include "global/partials/pagination.html" %}
 </div>
 {% endblock content %}
+{% block script %}
+<script>
+    set_task_clear_form();
+</script>
+{% endblock script %}
