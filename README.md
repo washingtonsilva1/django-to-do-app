@@ -10,3 +10,9 @@ Feito isso, utilize o seguinte código com o ambiente virtual ativo para instala
 ```
 pip install -r requirements.txt
 ```
+
+## Testes
+Os testes podem ser executados utilizando o pytest por meio do seguinte código:
+```
+pytest
+```
