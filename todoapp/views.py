@@ -127,7 +127,9 @@ class LogoutView(LoginRequiredMixin, View):
         return redirect('todoapp:login')
 
 
-class TaskCreateView(View):
+class TaskCreateView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('todoapp:login')
+
     def post(self, req, *args, **kwargs):
         task_form = TaskCreateForm(self.request.POST or None)
         if task_form.is_valid():
@@ -150,7 +152,9 @@ class TaskCreateView(View):
         return redirect("todoapp:home")
 
 
-class TaskUpdateView(View):
+class TaskUpdateView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('todoapp:login')
+
     def get_task(self, task_id: str):
         if not task_id.isdigit():
             raise Http404()
@@ -169,7 +173,9 @@ class TaskUpdateView(View):
         return redirect("todoapp:home")
 
 
-class TaskDeleteView(View):
+class TaskDeleteView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('todoapp:login')
+
     def get_task(self, task_id: str):
         if not task_id.isdigit():
             raise Http404()
@@ -187,7 +193,9 @@ class TaskDeleteView(View):
         return redirect('todoapp:home')
 
 
-class TasksClearView(View):
+class CleanCompletedTasksView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('todoapp:login')
+
     def post(self, req, *args, **kwargs):
         tasks = Task.objects.filter(
             is_completed=True,
@@ -203,7 +211,7 @@ class TasksClearView(View):
         else:
             sweetify.toast(
                 self.request,
-                'You do not have any completed tasks!',
+                'You do not have any completed task!',
                 icon='error'
             )
         return redirect('todoapp:home')
