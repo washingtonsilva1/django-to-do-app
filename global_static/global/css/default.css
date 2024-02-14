@@ -2,7 +2,8 @@
 
 :root {
     --color-bg-light: #f1ece6;
-    --color-bg-white: #ffffff;
+    --color-white: #ffffff;
+    --color-body-bg: #dfdfdf;
 
     --color-primary-light: #76b7cd;
     --color-primary-light-hover: #60a2b7;
@@ -27,7 +28,7 @@
 }
 
 body {
-    background-color: var(--color-bg-white);
+    background-color: var(--color-body-bg);
     font-family: 'Roboto', sans-serif;
 }
 
@@ -98,7 +99,7 @@ h1 {
     font-size: 20px;
     text-align: center;
     font-weight: 700;
-    color: var(--color-bg-white);
+    color: var(--color-white);
     transition: all .2s ease-in-out;
 }
 
@@ -207,7 +208,7 @@ h1 {
 
 .pagination-item.item-active {
     background-color: var(--color-primary-light);
-    color: var(--color-bg-white);
+    color: var(--color-white);
 }
 
 #front-container {
@@ -256,7 +257,7 @@ h1 {
 }
 
 .link-return .fa-solid {
-    color: var(--color-bg-white);
+    color: var(--color-white);
     font-size: 18px;
     vertical-align: text-bottom;
 }
@@ -291,7 +292,7 @@ h1 {
     position: relative;
     border-radius: var(--spacing-lg);
     width: 100%;
-    background-color: var(--color-bg-white);
+    background-color: var(--color-white);
 }
 
 .password-to-reveal .form-input-control {
@@ -319,7 +320,7 @@ h1 {
 
 .reveal-password .fa-solid {
     font-size: 18px;
-    color: var(--color-bg-white);
+    color: var(--color-white);
 }
 
 .form-block {
@@ -344,6 +345,10 @@ h1 {
 
 .task-empty-container {
     text-align: center;
+}
+
+.fa-solid.fa-eye {
+    padding-left: 1px;
 }
 
 /* Generic */
@@ -381,7 +386,7 @@ h1 {
 
 .btn-primary {
     background-color: var(--color-primary-light);
-    color: var(--color-bg-white);
+    color: var(--color-white);
     border-color: var(--color-primary-light);
 }
 
@@ -392,7 +397,7 @@ h1 {
 
 .btn-success {
     background-color: var(--color-success);
-    color: var(--color-bg-white);
+    color: var(--color-white);
     border-color: var(--color-success);
 }
 
