@@ -1,4 +1,4 @@
-from todoapp.views import LogoutView
+from accounts.views import LogoutView
 from utils.utils import TaskMixin
 
 from django.test import TestCase
@@ -17,7 +17,7 @@ class LogoutViewTest(TestCase, TaskMixin):
 
     def send_post(self, follow=False) -> HttpResponse:
         response = self.client.post(
-            reverse('todoapp:logout'),
+            reverse('accounts:logout'),
             data={
                 'user': self.user_data['username']
             },
@@ -26,7 +26,7 @@ class LogoutViewTest(TestCase, TaskMixin):
         return response
 
     def test_logout_view_is_using_correct_view_class(self):
-        view = resolve(reverse('todoapp:logout'))
+        view = resolve(reverse('accounts:logout'))
         self.assertIs(view.func.view_class, LogoutView)
 
     def test_logout_view_redirects_to_home_if_no_user_was_given(self):

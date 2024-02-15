@@ -20,7 +20,7 @@ class LoginFormTest(TestCase, TaskMixin):
     def test_login_form_fields_can_not_be_empty(self, field, error):
         self.form_data[field] = ''
         response = self.client.post(
-            reverse('todoapp:login'),
+            reverse('accounts:login'),
             data=self.form_data,
             follow=True
         )
@@ -28,7 +28,7 @@ class LoginFormTest(TestCase, TaskMixin):
 
     def test_login_form_user_not_found(self):
         response = self.client.post(
-            reverse('todoapp:login'),
+            reverse('accounts:login'),
             data=self.form_data,
             follow=True,
         )
@@ -39,7 +39,7 @@ class LoginFormTest(TestCase, TaskMixin):
     def test_login_form_authenticate_user(self):
         self.create_user(**self.form_data)
         response = self.client.post(
-            reverse('todoapp:login'),
+            reverse('accounts:login'),
             data=self.form_data,
         )
         self.assertRedirects(response, reverse('todoapp:home'))

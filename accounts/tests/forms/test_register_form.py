@@ -19,7 +19,7 @@ class RegisterFormTest(TestCase, TaskMixin):
 
     def send_post(self, follow=False) -> HttpResponse:
         response = self.client.post(
-            reverse('todoapp:register'),
+            reverse('accounts:register'),
             data=self.form_data,
             follow=follow
         )

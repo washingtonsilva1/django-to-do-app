@@ -1,4 +1,4 @@
-from todoapp.views import LoginTemplateView
+from accounts.views import LoginTemplateView
 from utils.utils import TaskMixin
 
 from django.test import TestCase
@@ -23,20 +23,20 @@ class LoginViewTest(TestCase, TaskMixin):
         )
 
     def test_login_view_is_loading_correct_view(self):
-        view = resolve(reverse('todoapp:login'))
+        view = resolve(reverse('accounts:login'))
         self.assertIs(view.func.view_class, LoginTemplateView)
 
     def test_login_view_is_rendering_correct_template(self):
-        response = self.client.get(reverse('todoapp:login'))
-        self.assertTemplateUsed(response, 'todoapp/view/login.html')
+        response = self.client.get(reverse('accounts:login'))
+        self.assertTemplateUsed(response, 'accounts/view/login.html')
 
     def test_login_view_template_is_rendering_correct_title(self):
         title_needed = 'Login | ToDo - App'
-        response = self.client.get(reverse('todoapp:login'))
+        response = self.client.get(reverse('accounts:login'))
         content = response.content.decode('utf-8')
         self.assertIn(title_needed, content)
 
     def test_login_view_redirects_to_home_if_logged(self):
         self.login_user()
-        response = self.client.get(reverse('todoapp:login'))
+        response = self.client.get(reverse('accounts:login'))
         self.assertRedirects(response, reverse('todoapp:home'))

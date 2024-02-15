@@ -4,16 +4,16 @@
 <div id="front-container">
     <div class="box-container">
         <div class="box">
-            <a class="link-return" href="{% url "todoapp:login" %}">
+            <a class="link-return" href="{% url "accounts:login" %}">
                 <i class="fa-solid fa-chevron-left"></i>
             </a>
             <div class="box-header">
                 <h1>Register</h1>
             </div>
             <div class="box-body">
-                <form class="form-control" action="{% url "todoapp:register" %}" method="POST">
+                <form class="form-control" action="{% url "accounts:register" %}" method="POST">
                     {% csrf_token %}
-                    {% include "todoapp/partials/form.html" %}
+                    {% include "accounts/partials/form.html" %}
                     <div class="form-block">
                         <button class="btn-block btn-success">Register</button>
                     </div>

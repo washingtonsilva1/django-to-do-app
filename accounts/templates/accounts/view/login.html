@@ -8,9 +8,9 @@
                 <h1>Login</h1>
             </div>
             <div class="box-body">
-                <form class="form-control" action="{% url "todoapp:login" %}" method="POST">
+                <form class="form-control" action="{% url "accounts:login" %}" method="POST">
                     {% csrf_token %}
-                    {% include "todoapp/partials/form.html" %}
+                    {% include "accounts/partials/form.html" %}
                     <div class="form-block">
                         <button class="btn-block btn-primary">Login</button>
                     </div>
@@ -25,7 +25,7 @@
                     </svg>
                 </div>
                 <div class="form-block">
-                    <a class="btn-block-link btn-success" href="{% url "todoapp:register" %}">Create an account</a>
+                    <a class="btn-block-link btn-success" href="{% url "accounts:register" %}">Create an account</a>
                 </div>
             </div>
         </div>
