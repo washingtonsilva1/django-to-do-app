@@ -38,7 +38,7 @@ class TaskUpdateViewTest(TestCase, TaskMixin):
         )
         content = response.content.decode()
         self.assertIn(
-            'Your task status has been updated successfully!',
+            'Your task has been updated successfully!',
             content,
         )
 
