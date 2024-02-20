@@ -68,11 +68,11 @@ class TaskUpdateView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         task_id = self.request.POST.get('task_id', '')
         task = self.get_task(task_id)
-        task.is_completed = not task.is_completed
+        task.is_completed = (not task.is_completed)
         task.save()
         sweetify.toast(
             self.request,
-            title='Your task status has been updated successfully!',
+            title='Your task has been updated successfully!',
             icon='success'
         )
         return redirect("todoapp:home")
