@@ -2,46 +2,55 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 <div id="main-container">
-    <div id="task-add-container">
-        <form action="{% url "todoapp:task_create" %}" method="POST">
+    <div class="logout-container">
+        <form action="{% url "accounts:logout" %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{user}}">
+            <button class="btn btn-primary"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </form>
+    </div>
+    <div class="default-container">
+        <form id="task-add-form" action="{% url "todoapp:task_create" %}" method="POST">
             {% csrf_token %}
             <input class="task-add-input" type="text" placeholder="What do you need to do?" name="name" required>
             <button class="task-add-button">ADD</button>
         </form>
     </div>
-    <div id="task-list-container">
-        <div class="task-list-display">
-            {% for task in page %}
-                <div class="task-list-item-container {% if task.is_completed %}finished{% endif %}">
-                    <form class="task-toggler-form" action="{% url "todoapp:task_update" %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="task_id" value="{{task.id}}">
-                        <button class="task-toggler">
-                            {% if task.is_completed %}
-                                <i class="fa-solid fa-check"></i>
-                            {% endif %}
-                        </button>
-                    </form>
-                    <div class="task-name">{{task}}</div>
-                    <form action="{% url "todoapp:task_delete" %}" class="task-delete-form" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="task_id" value="{{task.id}}">
-                        <button class="task-delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
+    <div class="default-container">
+        <div id="task-list-container">
+            <div class="task-list-display">
+                {% for task in page %}
+                    <div class="task-list-item-container {% if task.is_completed %}finished{% endif %}">
+                        <form class="task-toggler-form" action="{% url "todoapp:task_update" %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{task.id}}">
+                            <button class="task-toggler">
+                                {% if task.is_completed %}
+                                    <i class="fa-solid fa-check"></i>
+                                {% endif %}
+                            </button>
+                        </form>
+                        <div class="task-name">{{task}}</div>
+                        <form action="{% url "todoapp:task_delete" %}" class="task-delete-form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{task.id}}">
+                            <button class="task-delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                {% empty %}
+                <div class="task-empty-container">
+                    <span>No tasks were found.</span>
                 </div>
-            {% empty %}
-            <div class="task-empty-container">
-                <span>No tasks were found.</span>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        <div class="task-actions">
-            <form id="task-clear-form" action="{% url "todoapp:tasks_clear" %}" method="POST">
-                {% csrf_token %}
-                <button class="btn btn-primary">Clear tasks</button>
-            </form>
+            <div class="task-actions">
+                <form id="task-clear-form" action="{% url "todoapp:tasks_clear" %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-primary">Clear tasks</button>
+                </form>
+            </div>
         </div>
     </div>
     {% include "global/partials/pagination.html" %}
