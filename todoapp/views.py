@@ -48,11 +48,10 @@ class TaskCreateView(LoginRequiredMixin, View):
             )
         else:
             error = task_form.errors['name'][0]
-            sweetify.error(
+            sweetify.toast(
                 self.request,
-                title='Sorry, but...',
-                text=error,
-                button='Close'
+                error,
+                icon='error',
             )
         return redirect("todoapp:home")
 
@@ -70,11 +69,6 @@ class TaskUpdateView(LoginRequiredMixin, View):
         task = self.get_task(task_id)
         task.is_completed = (not task.is_completed)
         task.save()
-        sweetify.toast(
-            self.request,
-            title='Your task has been updated successfully!',
-            icon='success'
-        )
         return redirect("todoapp:home")
 
 
