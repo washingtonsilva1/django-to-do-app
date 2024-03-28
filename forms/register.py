@@ -19,18 +19,6 @@ class RegisterForm(forms.ModelForm):
             'unique': 'A user with this name already exists.',
         }
     )
-    email = forms.EmailField(
-        label='Email',
-        widget=forms.EmailInput(
-            attrs={
-                'class': 'form-input-control',
-            }
-        ),
-        error_messages={
-            'required': 'This field can not be empty.',
-            'invalid': 'Your email address must be valid.',
-        }
-    )
     password = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(
@@ -59,7 +47,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'password']
 
     def clean_password(self):
         cleaned_password = self.cleaned_data.get('password', '')

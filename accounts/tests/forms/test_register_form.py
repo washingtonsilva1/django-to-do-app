@@ -12,7 +12,6 @@ class RegisterFormTest(TestCase, TaskMixin):
     def setUp(self):
         self.form_data = {
             'username': 'DummyUser',
-            'email': 'dummymail@mailcompany.com',
             'password': '#DummyPassw0rd',
             'password2': '#DummyPassw0rd',
         }
@@ -27,7 +26,6 @@ class RegisterFormTest(TestCase, TaskMixin):
 
     @parameterized.expand([
         ('username', 'This field can not be empty.'),
-        ('email', 'This field can not be empty.'),
         ('password', 'This field can not be empty.'),
         ('password2', 'This field can not be empty.'),
     ])
@@ -44,15 +42,6 @@ class RegisterFormTest(TestCase, TaskMixin):
         self.assertIn(
             'A user with this name already exists.',
             response.context['form'].errors['username']
-        )
-
-    def test_register_form_email_field_must_be_valid(self):
-        invalid_mail = 'testmail.br'
-        self.form_data['email'] = invalid_mail
-        response = self.send_post()
-        self.assertIn(
-            'Your email address must be valid.',
-            response.context['form'].errors['email']
         )
 
     def test_register_form_password_field_must_match_the_requirements(self):
